@@ -76,7 +76,7 @@ xp80t test-print 192.168.50.200 --cut
 
 ## 实测记录
 
-换网络之后，我用 Mac 通过 USB 设置了这台 XP‑80T，重启后确认 TCP 9100 端口可以连接。拔掉 USB 后，打印机通过 Wi‑Fi 打出了 ESC/POS 小票并自动切纸。[完整测试记录](docs/test-log.zh-Hant.md)
+换网络之后，我用 Mac 通过 USB 设置了这台 XP‑80T，重启后确认 TCP 9100 端口可以连接。拔掉 USB 后，打印机通过 Wi‑Fi 打出了 ESC/POS 小票并自动切纸。[完整测试记录](docs/test-log.zh-Hans.md)
 
 ## 反馈与贡献
 

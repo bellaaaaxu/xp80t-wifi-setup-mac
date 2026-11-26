@@ -76,7 +76,7 @@ xp80t test-print 192.168.50.200 --cut
 
 ## Field test
 
-After a network change, I configured the XP‑80T over USB from a Mac, restarted it, and verified TCP port 9100. With USB unplugged, the printer produced an ESC/POS receipt over Wi‑Fi and cut it automatically. [完整測試紀錄（中文）](docs/test-log.zh-Hant.md)
+After a network change, I configured the XP‑80T over USB from a Mac, restarted it, and verified TCP port 9100. With USB unplugged, the printer produced an ESC/POS receipt over Wi‑Fi and cut it automatically. [Full test log (Simplified Chinese)](docs/test-log.zh-Hans.md)
 
 ## Feedback and contributions
 
