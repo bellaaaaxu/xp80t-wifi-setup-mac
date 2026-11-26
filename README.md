@@ -31,6 +31,18 @@ printf '\033@XP-80T network test\n\n\n\035V\000' | nc -w 3 "$printer_ip" 9100
 
 The print payload starts with ESC/POS initialization and ends with the `GS V 0` cut command. Confirm that the paper actually prints and cuts. [ESC/POS cut command reference](https://download4.epson.biz/sec_pubs/pos/reference_en/escpos/gs_cv.html)
 
+## Code
+
+[`src/configure.py`](src/configure.py) is the USB configuration step. It validates the settings (IP, gateway and mask on one subnet, SSID length, WPA2 password rules), builds the configuration packet, finds exactly one XP‑80T (`0483:5743`), checks that endpoint `0x02` is a bulk OUT endpoint, and writes the packet. It reads JSON on stdin and prints a JSON status, so a GUI or another script can call it.
+
+```sh
+python3 -m pip install pyusb   # libusb is also required, e.g. brew install libusb
+echo '{"ip":"192.168.50.200","mask":"255.255.255.0","gateway":"192.168.50.1","ssid":"YourSSID","password":"YourPassword"}' \
+  | python3 src/configure.py
+```
+
+Restart the printer afterwards, wait 30–60 seconds, then run the minimal test above. The packet format was tested on one XP‑80T only; other models or firmware may differ.
+
 ## Tools
 
 - macOS USB device reporting, Python, PyUSB and libusb for USB configuration
