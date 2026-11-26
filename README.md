@@ -1,6 +1,6 @@
 # Change Xprinter XP‑80T Wi‑Fi Settings from a Mac
 
-用 Mac 修改 Xprinter XP‑80T 的 Wi‑Fi 設定
+English | [简体中文](README.zh-Hans.md)
 
 Connect an Xprinter XP‑80T to a Mac by USB, write new Wi‑Fi and static IP settings, then confirm over Wi‑Fi that it prints and cuts a test receipt.
 
@@ -26,7 +26,7 @@ python -m pip install .
 
 On Windows, run `.venv\Scripts\Activate.ps1` in PowerShell in place of the activation line. The network commands use cross-platform Python sockets and were tested on Windows with a local simulated printer.
 
-**What has been verified on hardware:** USB Wi‑Fi setup and wireless printing with automatic cutting were verified on one XP‑80T, using a Python script and terminal commands during the field test. This packaged CLI was tested with a simulated printer and a simulated USB library; it has not yet been run end to end on a real printer.
+**What has been verified on hardware:** USB Wi‑Fi setup and wireless printing with automatic cutting were verified on one XP‑80T, using a Python script and terminal commands during the field test. This packaged CLI was tested with a simulated printer and a simulated USB library.
 
 ## Set up Wi‑Fi over USB (macOS)
 
