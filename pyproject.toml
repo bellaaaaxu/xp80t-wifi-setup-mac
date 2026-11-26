@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xp80t-tool"
+version = "0.1.0"
+description = "Change Xprinter XP-80T Wi-Fi settings from a Mac over USB, then test printing over Wi-Fi"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+
+[project.optional-dependencies]
+usb = ["pyusb>=1.2"]
+
+[project.scripts]
+xp80t = "xp80t_cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["xp80t_cli", "xp80t_usb"]

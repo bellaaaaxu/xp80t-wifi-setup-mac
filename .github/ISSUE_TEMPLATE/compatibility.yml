@@ -1,0 +1,45 @@
+name: Compatibility report
+description: Tell us whether the tool worked on your printer.
+title: "[Compatibility] "
+labels: ["compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: Please do not include your real Wi-Fi name, password or public IP address.
+  - type: input
+    id: model
+    attributes:
+      label: Printer model and firmware (if known)
+    validations:
+      required: true
+  - type: input
+    id: usb-id
+    attributes:
+      label: USB Vendor ID / Product ID (for setup-wifi)
+      placeholder: e.g. 0x0483 / 0x5743
+  - type: input
+    id: os
+    attributes:
+      label: Operating system and Python version
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command you ran and its output
+      render: shell
+    validations:
+      required: true
+  - type: checkboxes
+    id: result
+    attributes:
+      label: What happened at the printer
+      options:
+        - label: Wi-Fi settings appeared on the self-test page
+        - label: "check succeeded"
+        - label: Receipt printed
+        - label: Paper was cut
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
