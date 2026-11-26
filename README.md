@@ -42,7 +42,11 @@ python -m pip install '.[usb]'
 xp80t setup-wifi
 ```
 
-Connect one XP‑80T via a USB data cable. Enter a static IP that is free on your network, the subnet mask, gateway, and WPA2 Wi‑Fi details. The password prompt hides your input. Confirm, then restart the printer and wait 30–60 seconds. Unplug USB and run the network tests below. If PyUSB cannot find libusb, run the setup with `XP80T_LIBUSB_PATHS="$(brew --prefix libusb)/lib"`.
+Connect one XP‑80T via a USB data cable. Enter a static IP that is free on your network, the subnet mask, gateway, and WPA2 Wi‑Fi details. The password prompt hides your input. Confirm, then restart the printer and wait 30–60 seconds. Unplug USB and run the network tests below. `setup-wifi` first checks PyUSB, libusb and the printer, before asking for any settings. If PyUSB cannot find libusb, run:
+
+```sh
+XP80T_LIBUSB_PATHS="$(brew --prefix libusb)/lib" xp80t setup-wifi
+```
 
 Supported: WPA2‑PSK (AES) with a static IPv4 address. DHCP, WPA3 and enterprise Wi‑Fi are not supported. The tested unit had USB ID `0483:5743` and bulk OUT endpoint `0x02`; other hardware and firmware variants need separate verification. For scripts, a JSON stdin/stdout interface is available at `python src/configure.py`; the [USB module](src/xp80t_usb.py) documents its fields.
 
@@ -65,8 +69,8 @@ xp80t test-print 192.168.50.200 --cut
 | The computer does not see the printer over USB | Check the USB device list, cable (data, not charge‑only) and power |
 | The self‑test page shows the new settings | Check its router status, then ping the printer's IP from the computer |
 | Self‑test shows `Disconnect` after a restart | Recheck the Wi‑Fi name and password, and that the network uses WPA2. 5 GHz‑only networks have not been tested |
-| Ping works | Run `xp80t check` |
-| `check` succeeds | Unplug USB, run `xp80t test-print --cut`, confirm paper and cut |
+| Ping works | Run `xp80t check PRINTER_IP` |
+| `check` succeeds | Unplug USB, run `xp80t test-print PRINTER_IP --cut`, confirm paper and cut |
 
 ## Field test
 

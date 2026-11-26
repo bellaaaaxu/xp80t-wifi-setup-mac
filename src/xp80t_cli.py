@@ -6,7 +6,7 @@ import math
 import socket
 import sys
 
-from xp80t_usb import send_usb, wifi_command
+from xp80t_usb import check_usb, send_usb, wifi_command
 
 
 TEST_PAGE = b"\x1b@XP-80T network test\nTCP / ESC-POS\n\n\n"
@@ -37,6 +37,13 @@ def setup_xp80t():
     if not sys.stdin.isatty():
         print("Run setup-wifi in a terminal. For automation, use the USB helper's JSON interface.", file=sys.stderr)
         return 2
+
+    # Check PyUSB, libusb and the printer first, so nobody types settings that cannot be written.
+    status, message = check_usb()
+    if status != "ok":
+        print(message, file=sys.stderr)
+        return 1
+    print(message)
 
     try:
         settings = {

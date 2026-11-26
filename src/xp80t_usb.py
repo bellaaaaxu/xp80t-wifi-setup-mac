@@ -52,14 +52,16 @@ def wifi_command(settings):
     )
 
 
-def send_usb(command):
+def find_printer():
+    """Return (status, message, printer). printer is set only when status is "ok"."""
     try:
         import usb.backend.libusb1
         import usb.core
-        import usb.util
     except ImportError:
-        return "missing-pyusb", "PyUSB is not installed in this Python environment."
-    no_libusb = "libusb was not found. Check that libusb is installed."
+        return ("missing-pyusb", "PyUSB is not installed in this Python environment. "
+                "Install it with: python -m pip install '.[usb]'", None)
+    no_libusb = ("libusb was not found. Install it with: brew install libusb. If it is installed but not found, run: "
+                 "XP80T_LIBUSB_PATHS=\"$(brew --prefix libusb)/lib\" xp80t setup-wifi")
     try:
         backend = usb.backend.libusb1.get_backend()
         if backend is None:
@@ -73,16 +75,37 @@ def send_usb(command):
                 if backend is not None:
                     break
         if backend is None:
-            return "no-libusb", no_libusb
+            return "no-libusb", no_libusb, None
         printers = list(usb.core.find(find_all=True, idVendor=0x0483, idProduct=0x5743, backend=backend))
     except usb.core.NoBackendError:
-        return "no-libusb", no_libusb
+        return "no-libusb", no_libusb, None
     except usb.core.USBError:
-        return "error", "Could not read USB devices. Reconnect the USB cable and try again."
+        return "error", "Could not read USB devices. Reconnect the USB cable and try again.", None
     if len(printers) != 1:
         return "error", ("XP-80T (0483:5743) not found. Check that it is powered on and connected with a USB data cable."
-                         if not printers else "More than one matching device found. Connect only the printer you want to configure.")
-    printer = printers[0]
+                         if not printers else "More than one matching device found. Connect only the printer you want to configure."), None
+    return "ok", "Found one XP-80T (0483:5743) on USB.", printers[0]
+
+
+def check_usb():
+    """Check PyUSB, libusb and the printer without writing anything. Returns (status, message)."""
+    status, message, printer = find_printer()
+    if printer is not None:
+        import usb.core
+        import usb.util
+        try:
+            usb.util.dispose_resources(printer)
+        except usb.core.USBError:
+            pass
+    return status, message
+
+
+def send_usb(command):
+    status, message, printer = find_printer()
+    if printer is None:
+        return status, message
+    import usb.core
+    import usb.util
     try:
         try:
             configuration = printer.get_active_configuration()
