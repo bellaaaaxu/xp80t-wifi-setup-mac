@@ -24,7 +24,9 @@ python3 -m venv .venv
 python -m pip install .
 ```
 
-On Windows, run `.venv\Scripts\Activate.ps1` in PowerShell in place of the activation line. The network commands use cross-platform Python sockets and were tested on Windows with a local simulated printer. The USB setup was verified on macOS with one XP‑80T.
+On Windows, run `.venv\Scripts\Activate.ps1` in PowerShell in place of the activation line. The network commands use cross-platform Python sockets and were tested on Windows with a local simulated printer.
+
+**What has been verified on hardware:** USB Wi‑Fi setup and wireless printing with automatic cutting were verified on one XP‑80T, using a Python script and terminal commands during the field test. This packaged CLI was tested with a simulated printer and a simulated USB library; it has not yet been run end to end on a real printer.
 
 ## Set up Wi‑Fi over USB (macOS)
 
